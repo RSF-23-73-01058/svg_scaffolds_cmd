@@ -212,7 +212,7 @@ def process_input(data):
 			case _ if scaff_count[1] == 1:
 				interval_1 += 1
 	struct_per_scaff = n_structures / n_scaff
-	counts = { 'total_amount': n_scaff, 'acyclic_count': acyclic_count, 'unknown_count': acyclic_count, 'struct_per_scaff': struct_per_scaff, 'bar_counts': {'interval_1':interval_1/n_scaff, 'interval_2':interval_2/n_scaff, 'interval_3':interval_3/n_scaff,
+	counts = { 'total_amount': n_scaff, 'acyclic_count': acyclic_count, 'unknown_count': unknown_count, 'struct_per_scaff': struct_per_scaff, 'bar_counts': {'interval_1':interval_1/n_scaff, 'interval_2':interval_2/n_scaff, 'interval_3':interval_3/n_scaff,
 	'interval_4':interval_4/n_scaff, 'interval_5':interval_5/n_scaff, 'interval_6':interval_6/n_scaff, 'interval_7':interval_7/n_scaff, 'interval_8':interval_8/n_scaff, 'interval_9':interval_9/n_scaff,
 	'interval_10':interval_10/n_scaff, 'interval_11':interval_11/n_scaff, 'interval_12':interval_12/n_scaff, 'interval_13':interval_13/n_scaff} }
 	#Determine the fraction of the selected scaffolds
@@ -367,7 +367,8 @@ def process_input(data):
 		length_scaled = bbox_scaled[2] - bbox_scaled[0]
 		height_scaled = bbox_scaled[3] - bbox_scaled[1]
 		transform_factor = (item['score'] * scaling_factor)
-		transform_matrix = "(" + str(transform_factor) + ", 0.000000, 0.000000, " + str(transform_factor)+ ", -" + str(bbox_scaled[0]) + ", -" + str(bbox_scaled[1]) + ")"
+		#It is important: "str(-bbox_scaled[0])" to avoid the "--"
+		transform_matrix = "(" + str(transform_factor) + ", 0.000000, 0.000000, " + str(transform_factor)+ ", " + str(-bbox_scaled[0]) + ", " + str(-bbox_scaled[1]) + ")"
 		svg_text_transform = re.sub(r'(?m)<\?xml.*?</rect>', groupID, item['svg'], flags=re.S)
 		#Transform renderable SVG elements
 		svg_text_transformed =   svg_text_transform.replace("/>", " transform='matrix" + str(transform_matrix) + "' />")
