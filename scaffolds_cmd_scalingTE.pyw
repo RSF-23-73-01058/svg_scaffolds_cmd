@@ -324,7 +324,7 @@ def process_input(data):
 			#Draw the molecule
 			drawer.DrawMolecule(scaff_mol)
 			drawer.FinishDrawing()
-			size = drawer.GetMolSize(scaff_mol)
+		size = drawer.GetMolSize(scaff_mol)
 		##Get the SVG-text
 		svg_text_original = drawer.GetDrawingText().strip()
 		#Basic SVG-text adjustment
@@ -462,6 +462,7 @@ except FunctionTimedOut:
 	result = '{"news": "time is out"}'
 except Exception as e:
 	result = '{"news": "smth is wrong"}'
+
 
 
 
